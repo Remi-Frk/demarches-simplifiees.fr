@@ -112,12 +112,9 @@ class PiecesJustificativesService
 
     pdfs = []
 
-    procedure = dossiers.first.procedure
-    tdc_by_id = TypeDeChamp
-      .joins(:revisions)
-      .where(revisions: { id: procedure.revisions })
-      .to_a
-      .group_by(&:id)
+    dossier = dossiers.includes(:procedure, :types_de_champ_all).first
+    procedure = dossier.procedure
+    types_de_champ_all = dossier.types_de_champ_all.index_by(&:id)
 
     dossiers
       .includes(:champs, :champs_private, :commentaires, :individual,

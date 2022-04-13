@@ -20,8 +20,10 @@ class ProcedureRevision < ApplicationRecord
 
   has_many :revision_types_de_champ, -> { root.public_only.ordered }, class_name: 'ProcedureRevisionTypeDeChamp', foreign_key: :revision_id, dependent: :destroy, inverse_of: :revision
   has_many :revision_types_de_champ_private, -> { root.private_only.ordered }, class_name: 'ProcedureRevisionTypeDeChamp', foreign_key: :revision_id, dependent: :destroy, inverse_of: :revision
+  has_many :revision_types_de_champ_all, class_name: 'ProcedureRevisionTypeDeChamp', foreign_key: :revision_id
   has_many :types_de_champ, through: :revision_types_de_champ, source: :type_de_champ
   has_many :types_de_champ_private, through: :revision_types_de_champ_private, source: :type_de_champ
+  has_many :types_de_champ_all, through: :revision_types_de_champ_all, source: :type_de_champ
 
   has_many :owned_types_de_champ, class_name: 'TypeDeChamp', foreign_key: :revision_id, dependent: :destroy, inverse_of: :revision
   has_one :draft_procedure, -> { with_discarded }, class_name: 'Procedure', foreign_key: :draft_revision_id, dependent: :nullify, inverse_of: :draft_revision
