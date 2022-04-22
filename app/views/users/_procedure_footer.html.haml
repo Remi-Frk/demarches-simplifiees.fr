@@ -45,6 +45,12 @@
             %ul
               - politiques.each do |politique|
                 %li= politique
+            %p.mt-2.footer-header Cadre juridique :
+            %ul
+              - if procedure.deliberation.attached?
+                %li= link_to "Texte juridique la demande d'information", procedure.deliberation, target: '_blank', rel: 'noopener'
+              - else
+                %li= link_to "Texte cadrant la demande d'information", rails_blob_path(procedure.cadre_juridique), target: '_blank', rel: 'noopener'
 
     = render partial: 'users/general_footer_row', locals: { dossier: dossier }
 
